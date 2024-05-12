@@ -2,21 +2,21 @@
 using namespace std;
 
 void knapsack(int P[],int wt[],int n,int m){
-        int k[n][m];
+        int M[n][m];
         for (int i =0;i<=n;i++){
             for (int w = 0;w<=m;w++){
                 if(i==0||w==0){
-                    k[i][w]=0;
+                    M[i][w]=0;
                 }
                 else if(wt[i]<=w){
-                    k[i][w]=max(P[i]+k[i-1][w-wt[i]],k[i-1][w]); 
+                    M[i][w] = max(M[i-1][w],P[i]+M[i-1][w-wt[i]]);
                 }
                 else{
-                    k[i][w] = k[i-1][w];
+                    M[i][w] = M[i-1][w];
                 }
             }
         }
-    cout<<"The maximum profit is "<<k[n][m];
+    cout<<"The maximum profit is "<<M[n][m];
 }
 
 int main(){
@@ -38,8 +38,6 @@ int main(){
     cout<<"Enter capacity of knapsack"<<endl;
     int m;
     cin>>m;
-    // int P[5] = {0,25,10,5,10};
-    // int wt[5] = {0,5,2,1,3};
     knapsack(P,wt,n,m);
     return 0;
 }
