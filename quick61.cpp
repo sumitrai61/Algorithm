@@ -1,65 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int partition(int arr[], int start, int end)
-{
-
-	int pivot = arr[start];
-
-	int count = 0;
-	for (int i = start + 1; i <= end; i++) {
-		if (arr[i] <= pivot)
-			count++;
-	}
-
-	// Giving pivot element its correct position
-	int pivotIndex = start + count;
-	swap(arr[pivotIndex], arr[start]);
-
-	// Sorting left and right parts of the pivot element
-	int i = start, j = end;
-
-	while (i < pivotIndex && j > pivotIndex) {
-
-		while (arr[i] <= pivot) {
-			i++;
-		}
-
-		while (arr[j] > pivot) {
-			j--;
-		}
-
-		if (i < pivotIndex && j > pivotIndex) {
-			swap(arr[i++], arr[j--]);
-		}
-	}
-
-	return pivotIndex;
+int Partition(int A[],int l,int h){
+    int pivot = A[l];
+    int i =l,j=h;
+    while(i<j){
+        do
+        {
+            i++;
+        } while (A[i]<=pivot);
+        do
+        {
+            j--;
+        } while (A[j]>pivot);
+        if(i<j){
+            swap(A[i],A[j]);
+        }
+    }
+    swap(A[l],A[j]);
+    return j;  
 }
 
-void quickSort(int arr[], int start, int end)
-{
-
-	// base case
-	if (start >= end)
-		return;
-
-	// partitioning the array
-	int p = partition(arr, start, end);
-
-	// Sorting the left part
-	quickSort(arr, start, p - 1);
-
-	// Sorting the right part
-	quickSort(arr, p + 1, end);
+void QuickSort(int A[],int l,int h){
+    if(l<h){
+        int j = Partition(A,l,h);
+        QuickSort(A,l,j);
+        QuickSort(A,j+1,h);
+    }
 }
 
-int main()
-{
+int main(){
     cout<<"Enter number of element"<<endl;
     int n;
     cin>>n;
-    int arr[n];
+    int arr[n+1];
+    arr[n] = 99999999; //assigning a large value(for infinity purpose)
     cout<<"Enter elements to be sorted: "<<endl ;
     for(int i=0;i<n;i++){
         cin>>arr[i];
@@ -69,7 +44,7 @@ int main()
         cout<<arr[i]<<" ";
     }
     cout<<endl;
-    quickSort(arr, 0, n - 1);
+    QuickSort(arr, 0, n);
     cout<<"After sorting: ";
     for(int i=0;i<n;i++){
         cout<<arr[i]<<" "; 
