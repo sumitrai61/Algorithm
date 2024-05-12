@@ -2,7 +2,7 @@
 using namespace std;
 
 void knapsack(int P[],int wt[],int n,int m){
-        int k[n+1][m+1];
+        int k[n][m];
         for (int i =0;i<=n;i++){
             for (int w = 0;w<=m;w++){
                 if(i==0||w==0){
