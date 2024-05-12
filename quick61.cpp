@@ -1,26 +1,23 @@
-// C++ Implementation of the Quick Sort Algorithm.
 #include <iostream>
 using namespace std;
 
-int partition(int arr[], int start, int end)
+int partition(int arr[], int l, int h)
 {
 
-	int pivot = arr[start];
+	int pivot = arr[l];
 
 	int count = 0;
-	for (int i = start + 1; i <= end; i++) {
+	for (int i = l + 1; i <= h; i++) {
 		if (arr[i] <= pivot)
 			count++;
 	}
 
-	// Giving pivot element its correct position
-	int pivotIndex = start + count;
-	swap(arr[pivotIndex], arr[start]);
+	int p = l + count;
+	swap(arr[p], arr[l]);
 
-	// Sorting left and right parts of the pivot element
-	int i = start, j = end;
+	int i = l, j = h;
 
-	while (i < pivotIndex && j > pivotIndex) {
+	while (i < p && j > p) {
 
 		while (arr[i] <= pivot) {
 			i++;
@@ -30,29 +27,29 @@ int partition(int arr[], int start, int end)
 			j--;
 		}
 
-		if (i < pivotIndex && j > pivotIndex) {
+		if (i < p && j > p) {
 			swap(arr[i++], arr[j--]);
 		}
 	}
 
-	return pivotIndex;
+	return p;
 }
 
-void quickSort(int arr[], int start, int end)
+void quickSort(int arr[], int l, int h)
 {
 
 	// base case
-	if (start >= end)
+	if (l >= h)
 		return;
 
 	// partitioning the array
-	int p = partition(arr, start, end);
+	int p = partition(arr, l, h);
 
 	// Sorting the left part
-	quickSort(arr, start, p - 1);
+	quickSort(arr, l, p - 1);
 
 	// Sorting the right part
-	quickSort(arr, p + 1, end);
+	quickSort(arr, p + 1, h);
 }
 
 int main()
